@@ -25,7 +25,7 @@ func part1(list1: [Int], list2: [Int]) {
 }
 
 func part2(list1: [Int], list2: [Int]) {
-    var list2Counts: [Int: Int] = getCounts(list: list2)
+    let list2Counts: [Int: Int] = getCounts(list: list2)
     var totalSimilarityScore = 0
     for n in list1 {
         let occurrences = list2Counts[n] ?? 0
