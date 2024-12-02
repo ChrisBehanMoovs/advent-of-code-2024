@@ -3,3 +3,4 @@
 
 print("Hello, world!")
 day1()
+day2()
