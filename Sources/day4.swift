@@ -79,8 +79,8 @@ func isXmass(row: Int, col: Int, grid: [[String.Element]]) -> Bool {
     guard inBounds(coords: diag1, grid: grid) && inBounds(coords: diag2, grid: grid) else {
         return false
     }
-    var word1 =  String(grid[diag1[0].0][diag1[0].1]) + String(grid[diag1[1].0][diag1[1].1]) + String(grid[diag1[2].0][diag1[2].1])
-    var word2 =  String(grid[diag2[0].0][diag1[0].1]) + String(grid[diag2[1].0][diag2[1].1]) + String(grid[diag2[2].0][diag2[2].1])
+    let word1 =  String(grid[diag1[0].0][diag1[0].1]) + String(grid[diag1[1].0][diag1[1].1]) + String(grid[diag1[2].0][diag1[2].1])
+    let word2 =  String(grid[diag2[0].0][diag1[0].1]) + String(grid[diag2[1].0][diag2[1].1]) + String(grid[diag2[2].0][diag2[2].1])
     return (word1 == "MAS" || word1 == "SAM") && (word2 == "MAS" || word2 == "SAM")
 }
 
