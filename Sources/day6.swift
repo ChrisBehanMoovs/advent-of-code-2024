@@ -42,16 +42,16 @@ func findGuard(map: [[Character]]) -> (position, Character) {
 }
 
 func part1(map: [[Character]]) {
-    var MapForTracking = map
+    // var MapForTracking = map
     var MapForMoving = map
     var (pos, dir) = findGuard(map: MapForMoving)
     while true {
-        (pos, dir) = moveGuard(map: &MapForMoving, trackMap: &MapForTracking, pos: pos, dir: dir)
+        (pos, dir) = moveGuard(map: &MapForMoving, pos: pos, dir: dir)
         if pos.x == -1 {
             break
         }
     }
-    let count = MapForTracking.reduce(0) { acc, row in
+    let count = MapForMoving.reduce(0) { acc, row in
         acc + row.filter { $0 == "X" }.count
     }
     print("Part 1 answer: \(count)")
@@ -62,7 +62,7 @@ func markVisited(map: inout [[Character]], pos: position) {
 }
 
 func canMoveOnSpace(map: inout [[Character]], pos: position) -> Bool {
-    return map[pos.y][pos.x] == "."
+    return map[pos.y][pos.x] == "." || map[pos.y][pos.x] == "X"
 }
 
 func isInBounds(pos: position, map: [[Character]]) -> Bool {
@@ -70,24 +70,21 @@ func isInBounds(pos: position, map: [[Character]]) -> Bool {
 }
 
 func moveGuard(
-    map: inout [[Character]], trackMap: inout [[Character]], pos: position, dir: Character
+    map: inout [[Character]], pos: position, dir: Character
 ) -> (position, Character) {
     let (yChange, xChange) = velocity[dir]!
     let nextPos = position(x: pos.x + xChange, y: pos.y + yChange)
 
     if !isInBounds(pos: nextPos, map: map) {
-        markVisited(map: &trackMap, pos: pos)
+        markVisited(map: &map, pos: pos)
         return (position(x: -1, y: -1), " ")
     }
 
     if canMoveOnSpace(map: &map, pos: nextPos) {  
-        map[pos.y][pos.x] = "."
-        trackMap[pos.y][pos.x] = "X"
-        map[nextPos.y][nextPos.x] = dir
+        markVisited(map: &map, pos: pos)
         return (nextPos, dir)
     } else {  
         let newDir = rotate[dir]!
-        map[pos.y][pos.x] = newDir
         return (pos, newDir)
     }
 }
